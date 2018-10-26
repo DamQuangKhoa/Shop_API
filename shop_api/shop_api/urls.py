@@ -23,6 +23,8 @@ from main_api import views as view
 router = routers.SimpleRouter()
 router.register('categories', view.CategoriesList,base_name="Categories")
 router.register('categories', view.CateogoriesDetail,base_name="Categories")
+router.register('products', view.ProductList,base_name="Products")
+router.register('products', view.ProductDetail,base_name="Products")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include(router.urls))

@@ -14,3 +14,11 @@ class CateogoriesDetail(viewsets.GenericViewSet,RetrieveUpdateDestroyAPIView):
     queryset = models.Categories.objects.all()
     serializer_class = serial.CategoriesSerializer
     # lookup_field = 'id'
+class ProductList(viewsets.GenericViewSet, ListCreateAPIView):
+    queryset = models.Products.objects.all()
+    serializer_class = serial.ProductSerializer
+
+class ProductDetail(viewsets.GenericViewSet,RetrieveUpdateDestroyAPIView):
+    queryset = models.Products.objects.all()
+    serializer_class = serial.ProductSerializer
+    # lookup_field = 'id'

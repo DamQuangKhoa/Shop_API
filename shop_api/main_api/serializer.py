@@ -1,7 +1,13 @@
 from rest_framework import serializers
-from .models import *
-class CategoriesSerializer(serializers.ModelSerializer):
+from main_api  import models as models
+
+
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Categories
+        model = models.Products
         fields = '__all__'
-        depth = 2
+class CategoriesSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True,read_only= True)
+    class Meta:
+        model = models.Categories
+        fields = ('name', 'products')
