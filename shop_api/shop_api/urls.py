@@ -25,6 +25,8 @@ router.register('categories', view.CategoriesList,base_name="Categories")
 router.register('categories', view.CateogoriesDetail,base_name="Categories")
 router.register('products', view.ProductList,base_name="Products")
 router.register('products', view.ProductDetail,base_name="Products")
+router.register('orders', view.OrderList,base_name="orders")
+router.register('orders', view.OrderDetail,base_name="orders")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include(router.urls))
