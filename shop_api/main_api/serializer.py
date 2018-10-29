@@ -6,11 +6,12 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = '__all__'
+        depth = 2
 class CategoriesSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many = True, read_only = True)
+    products = ProductSerializer(many=True )  
     class Meta:
         model = Categories
-        fields = ('name', 'products')
+        fields = ('__all__')
 
 class OrderItemsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,4 +21,4 @@ class OrderSerializer(serializers.ModelSerializer):
     order_item = OrderItemsSerializer(many = True, read_only = True)
     class Meta:
         model = Order
-        fields = ('status', 'order_item')
+        fields = ('__all__')

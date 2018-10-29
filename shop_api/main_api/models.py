@@ -57,11 +57,11 @@ class Order_items(models.Model):
     product_id = models.ForeignKey('Products', on_delete = models.Case)
     quanlity = models.IntegerField(default = 0)
     def __str__(self):
-        return self.quanlity
+        return 'Product: {} and quality: {}'.format(self.product_id,self.quanlity)
 
 
 class Products(models.Model):
-    cat = models.ForeignKey('Categories', on_delete = models.CASCADE)
+    cat = models.ForeignKey('Categories',related_name='products', on_delete = models.CASCADE)
     name = models.CharField(max_length = 200)
     description = models.TextField()
     image = models.CharField(max_length = 200,default = '')
