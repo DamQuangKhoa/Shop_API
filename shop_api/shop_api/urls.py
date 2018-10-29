@@ -18,7 +18,10 @@ from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
 from main_api import views as view
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.SimpleRouter()
 router.register('categories', view.CategoriesList,base_name="Categories")
@@ -27,7 +30,10 @@ router.register('products', view.ProductList,base_name="Products")
 router.register('products', view.ProductDetail,base_name="Products")
 router.register('orders', view.OrderList,base_name="orders")
 router.register('orders', view.OrderDetail,base_name="orders")
+router.register('current-order', view.OrderCurrent,base_name="current-order")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/',include(router.urls))
+    path('api/v1/',include(router.urls)),
+    path('api/v1/sessions',TokenObtainPairView.as_view(), name='token_obtain_pair')
 ]
