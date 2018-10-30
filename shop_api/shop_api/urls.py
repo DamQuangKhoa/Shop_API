@@ -35,5 +35,6 @@ router.register('current-order', view.OrderCurrent,base_name="current-order")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include(router.urls)),
-    path('api/v1/sessions',TokenObtainPairView.as_view(), name='token_obtain_pair')
+    path('api/v1/sessions',TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/current-session',TokenRefreshView.as_view(), name='token_refesh')
 ]

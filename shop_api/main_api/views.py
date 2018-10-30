@@ -3,20 +3,32 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveAPIView,
-    UpdateAPIView
-    
+    UpdateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    DestroyAPIView
 )
-from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser,IsAuthenticatedOrReadOnly
+from rest_framework.authentication import TokenAuthentication
 
 from rest_framework import viewsets
 from main_api import models as models
-from main_api import serializer as serial# Create your views here. 
-class CategoriesList(viewsets.GenericViewSet, ListCreateAPIView):
+from main_api import serializer as serial
+# Create your views here. 
+class CategoriesList(viewsets.GenericViewSet,ListAPIView):
     queryset = models.Categories.objects.all()
     serializer_class = serial.CategoriesSerializer
-class CateogoriesDetail(viewsets.GenericViewSet,RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # authentication_classes = (TokenAuthentication)
+class CateogoriesDetail(viewsets.GenericViewSet,UpdateAPIView,DestroyAPIView):
     queryset = models.Categories.objects.all()
     serializer_class = serial.CategoriesSerializer
+    permission_classes = (IsAdminUser,)
+# class CateogoriesDetail(viewsets.GenericViewSet,RetrieveAPIView):
+#     queryset = models.Categories.objects.all()
+#     serializer_class = serial.CategoriesSerializer
+#     permission_classes = (IsAuthenticatedOrReadOnly,)
+    
     # lookup_field = 'id'
 class ProductList(viewsets.GenericViewSet, ListCreateAPIView):
     queryset = models.Products.objects.all()

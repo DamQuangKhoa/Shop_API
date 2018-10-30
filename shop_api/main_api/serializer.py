@@ -8,7 +8,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 2
 class CategoriesSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True )  
+    products = ProductSerializer(many=True ,read_only= True)  
     class Meta:
         model = Categories
         fields = ('__all__')
