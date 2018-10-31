@@ -31,6 +31,7 @@ router.register('products', view.ProductDetail,base_name="Products")
 router.register('orders', view.OrderList,base_name="orders")
 router.register('orders', view.OrderDetail,base_name="orders")
 router.register('current-order', view.OrderCurrent,base_name="current-order")
+router.register('current-user', view.RetrieveCurrentUser,base_name="current-user")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from rest_framework import mixins
+User = get_user_model()
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -6,7 +9,8 @@ from rest_framework.generics import (
     UpdateAPIView,
     ListAPIView,
     RetrieveAPIView,
-    DestroyAPIView
+    DestroyAPIView,
+    RetrieveUpdateAPIView
 )
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser,IsAuthenticatedOrReadOnly
 from rest_framework.authentication import TokenAuthentication
@@ -44,7 +48,7 @@ class CateogoriesDetail(viewsets.GenericViewSet,RetrieveUpdateDestroyAPIView):
 #     permission_classes = (IsAuthenticatedOrReadOnly,)
     
     # lookup_field = 'id'
-class ProductList(viewsets.GenericViewSet, ListAPIView):
+class ProductList(viewsets.GenericViewSet, ListCreateAPIView):
     queryset = models.Products.objects.all()
     serializer_class = serial.ProductSerializer
     permission_classes = (IsAdmindNotGet,)
@@ -61,7 +65,22 @@ class OrderDetail(viewsets.GenericViewSet,RetrieveUpdateDestroyAPIView):
     queryset = models.Order.objects.all()
     serializer_class = serial.OrderSerializer
     permission_classes = (IsAdmindNotGet,)
-class OrderCurrent(viewsets.GenericViewSet,RetrieveAPIView):
+class OrderCurrent(viewsets.GenericViewSet,RetrieveAPIView ):
     queryset = models.Order.objects.all()
     serializer_class = serial.OrderSerializer
     permission_classes = (IsAdmindNotGet,)
+
+class RetrieveCurrentUser(RetrieveUpdateAPIView,viewsets.GenericViewSet):
+    queryset = User.objects.all()
+    serializer_class = serial.UserSerializer
+    permission_classes = (IsAuthenticated,)
+    def get_object(self):
+        return self.request.user
+    def list(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)     
+    """
+    A viewset that provides `retrieve`, `create`, and `list` actions.
+
+
+
+    """
