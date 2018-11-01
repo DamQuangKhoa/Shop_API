@@ -65,14 +65,15 @@ class OrderCurrent(viewsets.GenericViewSet, RetrieveUpdateAPIView):
     queryset = models.Order.objects.all()
     serializer_class = serial.OrderSerializer
     permission_classes = (IsAuthenticated, )
-    
+
     def get_object(self):
-        user = self.request.user
-        return Order.objects.get(customer=user.id)
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset)
+        return obj
 
     def get_queryset(self):
         user = self.request.user
-        return Order.objects.filter(customer=user.id)
+        return Order.objects.filter(customer=user.id)[:1].get()
 
     def list(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)      
